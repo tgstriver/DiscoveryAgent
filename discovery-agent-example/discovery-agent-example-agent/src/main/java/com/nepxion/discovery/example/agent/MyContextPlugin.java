@@ -8,7 +8,7 @@ public class MyContextPlugin extends AbstractPlugin {
 
     @Override
     protected String getMatcherClassName() {
-        // 返回存储ThreadLocal对象的类名，由于插件是可以插拔的，所以必须是字符串形式，不允许是显式引入类
+        // 返回存储ThreadLocal对象的类名，由于插件是可以插拔的，所以必须是字符串形式，不允许显式引入类
         return "com.nepxion.discovery.example.sdk.MyContext";
     }
 

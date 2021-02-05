@@ -168,7 +168,7 @@ com.nepxion.discovery.example.agent.MyContextPlugin
 - 给服务增加启动参数并启动，如下
 
 ```
--javaagent:C:/opt/discovery-agent/discovery-agent-starter-${discovery.agent.version}.jar -Dthread.scan.packages=com.nepxion.discovery.example.application -Dthread.myplugin.enabled=true
+-javaagent:/Users/striver/IdeaProjects/nepxion/DiscoveryAgent/discovery-agent/discovery-agent-starter-1.0.2.jar -Dthread.scan.packages=com.nepxion.discovery.example.application -Dthread.myplugin.enabled=true
 ```
 
 ③ Application侧工作
@@ -258,7 +258,7 @@ public class MyApplication {
 2020-11-09 00:08:19.434  INFO 16588 --- [      Thread-13] c.n.d.example.application.MyApplication  : Sleep 5秒之后，【子】线程ThreadLocal：{10=MyContext} 
 ```
 
-如果不加异步Agent，则输出结果，如下，可以发现在子线程中ThreadLocal上下文全部都丢失
+如果不加异步Agent，则输出结果如下，可以发现在子线程中ThreadLocal上下文全部都丢失
 ```
 2020-11-09 00:01:40.133  INFO 16692 --- [nio-8080-exec-1] c.n.d.example.application.MyApplication  : 【主】线程ThreadLocal：{1=MyContext}
 2020-11-09 00:01:40.135  INFO 16692 --- [       Thread-8] c.n.d.example.application.MyApplication  : 【子】线程ThreadLocal：{}
@@ -292,5 +292,5 @@ public class MyApplication {
 2020-11-09 00:01:45.190  INFO 16692 --- [      Thread-17] c.n.d.example.application.MyApplication  : Sleep 5秒之后，【子】线程ThreadLocal：{} 
 ```
 
-完整示例，请参考[https://github.com/Nepxion/DiscoveryAgent/tree/master/discovery-agent-example](https://github.com/Nepxion/DiscoveryAgent/tree/master/discovery-agent-example)。上述自定义插件的方式，即可解决使用者在线程切换时丢失ThreadLocal上下文的问题
+
 
