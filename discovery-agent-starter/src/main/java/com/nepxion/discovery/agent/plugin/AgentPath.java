@@ -1,22 +1,14 @@
 package com.nepxion.discovery.agent.plugin;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
+import com.nepxion.discovery.agent.logger.AgentLogger;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import com.nepxion.discovery.agent.logger.AgentLogger;
-
 public class AgentPath {
+
     private static final AgentLogger LOG = AgentLogger.getLogger(AgentPath.class.getName());
     private static File AGENT_PACKAGE_PATH;
 
@@ -34,8 +26,8 @@ public class AgentPath {
 
     private static File findPath() {
         String classResourcePath = AgentPath.class.getName().replaceAll("\\.", "/") + ".class";
-
         URL resource = ClassLoader.getSystemClassLoader().getResource(classResourcePath);
+
         if (resource != null) {
             String urlString = resource.toString();
 
@@ -52,6 +44,7 @@ public class AgentPath {
                 } catch (MalformedURLException | URISyntaxException e) {
                     LOG.warn("Can not locate agent jar file by url:" + urlString, e);
                 }
+
                 if (agentJarFile.exists()) {
                     return agentJarFile.getParentFile();
                 }

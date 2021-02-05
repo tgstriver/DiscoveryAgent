@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 插件查找器
+ */
 public class PluginFinder {
 
     private static final AgentLogger LOG = AgentLogger.getLogger(PluginFinder.class.getName());
@@ -23,9 +26,11 @@ public class PluginFinder {
     public static void load(TransformTemplate transformTemplate) {
         new SpringAsyncPlugin().install(transformTemplate);
         new ThreadPlugin().install(transformTemplate);
+
         URL[] pluginUrls = getPlugin().toArray(new URL[]{});
         ClassLoader classLoader = URLClassLoaderFactory.createClassLoader("discovery.agent", pluginUrls, PluginFinder.class.getClassLoader());
         List<Plugin> loadPlugins = PluginLoader.load(classLoader, Plugin.class);
+
         for (Plugin plugin : loadPlugins) {
             if (plugin.isEnabled()) {
                 plugin.install(transformTemplate);
@@ -36,6 +41,11 @@ public class PluginFinder {
         }
     }
 
+    /**
+     * 查找所有的插件
+     *
+     * @return
+     */
     public static List<URL> getPlugin() {
         File agentDictionary = AgentPath.getPath();
         File plugins = new File(agentDictionary, "plugin");
@@ -49,12 +59,12 @@ public class PluginFinder {
         if (checkDirectory(libDir)) {
             return Collections.emptyList();
         }
-        final File[] libFileList = FileUtil.listFiles(libDir, new String[]{".jar"});
 
+        final File[] libFileList = FileUtil.listFiles(libDir, new String[]{".jar"});
         List<URL> libURLList = toURLs(libFileList);
         URL agentDirUri = toURL(new File(agentLibPath));
 
-        List<URL> jarURLList = new ArrayList<URL>(libURLList);
+        List<URL> jarURLList = new ArrayList<>(libURLList);
         jarURLList.add(agentDirUri);
 
         return jarURLList;
@@ -78,7 +88,6 @@ public class PluginFinder {
     private static List<URL> toURLs(File[] jarFileList) {
         try {
             URL[] jarURLArray = FileUtil.toURLs(jarFileList);
-
             return Arrays.asList(jarURLArray);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);

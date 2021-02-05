@@ -1,22 +1,13 @@
 package com.nepxion.discovery.agent.util;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
-
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
 public final class FileUtil {
+
     private FileUtil() {
     }
 
@@ -32,18 +23,15 @@ public final class FileUtil {
         Assert.requireNonNull(path, "path");
         Assert.requireNonNull(fileExtensions, "fileExtensions");
 
-        return path.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                String path = pathname.getName();
-                for (String extension : fileExtensions) {
-                    if (path.lastIndexOf(extension) != -1) {
-                        return true;
-                    }
+        return path.listFiles(pathname -> {
+            String path1 = pathname.getName();
+            for (String extension : fileExtensions) {
+                if (path1.lastIndexOf(extension) != -1) {
+                    return true;
                 }
-
-                return false;
             }
+
+            return false;
         });
     }
 
