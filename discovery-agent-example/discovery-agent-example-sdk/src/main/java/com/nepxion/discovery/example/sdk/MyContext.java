@@ -1,24 +1,11 @@
 package com.nepxion.discovery.example.sdk;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author Haojun Ren
- * @version 1.0
- */
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class MyContext {
-    private static final ThreadLocal<MyContext> THREAD_LOCAL = new ThreadLocal<MyContext>() {
-        @Override
-        protected MyContext initialValue() {
-            return new MyContext();
-        }
-    };
+
+    private static final ThreadLocal<MyContext> THREAD_LOCAL = ThreadLocal.withInitial(MyContext::new);
 
     public static MyContext getCurrentContext() {
         return THREAD_LOCAL.get();

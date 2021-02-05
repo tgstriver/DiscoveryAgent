@@ -1,18 +1,23 @@
 package com.nepxion.discovery.agent.threadlocal;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
-
 public interface ThreadLocalHook {
+
+    /**
+     * 从主线程的ThreadLocal里获取并返回上下文对象
+     *
+     * @return
+     */
     Object create();
 
+    /**
+     * 把create方法里获取到的上下文对象放置到子线程的ThreadLocal里
+     *
+     * @param object
+     */
     void before(Object object);
 
+    /**
+     * 线程结束，销毁上下文对象
+     */
     void after();
 }

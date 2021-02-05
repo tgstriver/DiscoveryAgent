@@ -1,14 +1,5 @@
 package com.nepxion.discovery.agent.util;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
-
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
@@ -17,10 +8,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class ClassInfo {
+
     private final String className;
     private final byte[] classFileBuffer;
     private final ClassLoader loader;
-
     private CtClass ctClass;
 
     public ClassInfo(String className, byte[] classFileBuffer, ClassLoader loader) {
@@ -49,7 +40,6 @@ public class ClassInfo {
         clazz.defrost();
 
         this.ctClass = clazz;
-
         return clazz;
     }
 }

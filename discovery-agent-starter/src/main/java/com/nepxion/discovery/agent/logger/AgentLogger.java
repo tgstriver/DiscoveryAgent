@@ -1,20 +1,12 @@
 package com.nepxion.discovery.agent.logger;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
-
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 
 public class AgentLogger {
+
     private static final AgentLogger LOG = AgentLogger.getLogger(AgentLogger.class.getName());
 
     private static PrintStream printStream;
@@ -45,7 +37,7 @@ public class AgentLogger {
 
         MessageFormat messageFormat = new MessageFormat(messagePattern);
         final long date = System.currentTimeMillis();
-        Object[] parameter = { date, logLevel, msg, exceptionMessage };
+        Object[] parameter = {date, logLevel, msg, exceptionMessage};
 
         return messageFormat.format(parameter);
     }

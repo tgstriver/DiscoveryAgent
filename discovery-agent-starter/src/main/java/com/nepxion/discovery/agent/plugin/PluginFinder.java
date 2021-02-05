@@ -1,13 +1,12 @@
 package com.nepxion.discovery.agent.plugin;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
+import com.nepxion.discovery.agent.callback.TransformTemplate;
+import com.nepxion.discovery.agent.logger.AgentLogger;
+import com.nepxion.discovery.agent.plugin.loader.PluginLoader;
+import com.nepxion.discovery.agent.plugin.loader.URLClassLoaderFactory;
+import com.nepxion.discovery.agent.plugin.spring.async.SpringAsyncPlugin;
+import com.nepxion.discovery.agent.plugin.thread.ThreadPlugin;
+import com.nepxion.discovery.agent.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,21 +16,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.nepxion.discovery.agent.callback.TransformTemplate;
-import com.nepxion.discovery.agent.logger.AgentLogger;
-import com.nepxion.discovery.agent.plugin.loader.PluginLoader;
-import com.nepxion.discovery.agent.plugin.loader.URLClassLoaderFactory;
-import com.nepxion.discovery.agent.plugin.spring.async.SpringAsyncPlugin;
-import com.nepxion.discovery.agent.plugin.thread.ThreadPlugin;
-import com.nepxion.discovery.agent.util.FileUtil;
-
 public class PluginFinder {
+
     private static final AgentLogger LOG = AgentLogger.getLogger(PluginFinder.class.getName());
 
     public static void load(TransformTemplate transformTemplate) {
         new SpringAsyncPlugin().install(transformTemplate);
         new ThreadPlugin().install(transformTemplate);
-        URL[] pluginUrls = getPlugin().toArray(new URL[] {});
+        URL[] pluginUrls = getPlugin().toArray(new URL[]{});
         ClassLoader classLoader = URLClassLoaderFactory.createClassLoader("discovery.agent", pluginUrls, PluginFinder.class.getClassLoader());
         List<Plugin> loadPlugins = PluginLoader.load(classLoader, Plugin.class);
         for (Plugin plugin : loadPlugins) {
@@ -57,7 +49,7 @@ public class PluginFinder {
         if (checkDirectory(libDir)) {
             return Collections.emptyList();
         }
-        final File[] libFileList = FileUtil.listFiles(libDir, new String[] { ".jar" });
+        final File[] libFileList = FileUtil.listFiles(libDir, new String[]{".jar"});
 
         List<URL> libURLList = toURLs(libFileList);
         URL agentDirUri = toURL(new File(agentLibPath));

@@ -1,14 +1,14 @@
 package com.nepxion.discovery.agent.plugin.thread;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
-
+import com.nepxion.discovery.agent.async.AsyncContextAccessor;
+import com.nepxion.discovery.agent.callback.TransformCallback;
+import com.nepxion.discovery.agent.callback.TransformTemplate;
+import com.nepxion.discovery.agent.logger.AgentLogger;
+import com.nepxion.discovery.agent.matcher.MatcherFactory;
+import com.nepxion.discovery.agent.matcher.MatcherOperator;
+import com.nepxion.discovery.agent.plugin.Plugin;
+import com.nepxion.discovery.agent.util.ClassInfo;
+import com.nepxion.discovery.agent.util.StringUtil;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
@@ -19,17 +19,8 @@ import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
 import java.util.List;
 
-import com.nepxion.discovery.agent.async.AsyncContextAccessor;
-import com.nepxion.discovery.agent.callback.TransformCallback;
-import com.nepxion.discovery.agent.callback.TransformTemplate;
-import com.nepxion.discovery.agent.logger.AgentLogger;
-import com.nepxion.discovery.agent.matcher.MatcherFactory;
-import com.nepxion.discovery.agent.matcher.MatcherOperator;
-import com.nepxion.discovery.agent.plugin.Plugin;
-import com.nepxion.discovery.agent.util.ClassInfo;
-import com.nepxion.discovery.agent.util.StringUtil;
-
 public class ThreadPlugin extends Plugin {
+
     private static final AgentLogger LOG = AgentLogger.getLogger(ThreadPlugin.class.getName());
 
     @Override
@@ -37,13 +28,14 @@ public class ThreadPlugin extends Plugin {
         String threadScanPackages = System.getProperty(ThreadConstant.THREAD_SCAN_PACKAGES);
         if (StringUtil.isEmpty(threadScanPackages)) {
             LOG.warn(String.format("Thread scan packages (%s) is null, ignore thread context switch", ThreadConstant.THREAD_SCAN_PACKAGES));
-
             return;
         }
+
         LOG.info(String.format("Trace (%s) Runnable/Callable for thread context switch", threadScanPackages));
         List<String> basePackages = StringUtil.tokenizeToStringList(threadScanPackages, ThreadConstant.THREAD_SCAN_PACKAGES_DELIMITERS);
         RunnableTransformCallback runnableTransformCallback = new RunnableTransformCallback();
         CallableTransformCallback callableTransformCallback = new CallableTransformCallback();
+
         for (String basePackage : basePackages) {
             MatcherOperator runnableInterfaceMatcherOperator = MatcherFactory.newPackageBasedMatcher(basePackage, ThreadConstant.RUNNABLE_CLASS_NAME);
             MatcherOperator callableInterfaceMatcherOperator = MatcherFactory.newPackageBasedMatcher(basePackage, ThreadConstant.CALLABLE_CLASS_NAME);

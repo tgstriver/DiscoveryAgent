@@ -1,15 +1,14 @@
 package com.nepxion.discovery.agent.matcher;
 
 /**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
+ * 简单工厂模式
  */
+public final class MatcherFactory {
 
-public class MatcherFactory {
+    private MatcherFactory() {
+
+    }
+
     public static ClassMatcher newClassNameMatcher(String classInternalName) {
         return new ClassNameMatcher(classInternalName);
     }

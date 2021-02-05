@@ -1,21 +1,12 @@
 package com.nepxion.discovery.agent.plugin.strategy.mdc;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author HaojunRen
- * @version 1.0
- */
+import com.nepxion.discovery.agent.threadlocal.AbstractThreadLocalHook;
+import org.slf4j.MDC;
 
 import java.util.Map;
 
-import org.slf4j.MDC;
-
-import com.nepxion.discovery.agent.threadlocal.AbstractThreadLocalHook;
-
 public class MDCContextHook extends AbstractThreadLocalHook {
+
     @Override
     public Object create() {
         return MDC.getCopyOfContextMap();

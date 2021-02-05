@@ -1,20 +1,16 @@
 package com.nepxion.discovery.agent.threadlocal;
 
-/**
- * <p>Title: Nepxion Discovery</p>
- * <p>Description: Nepxion Discovery</p>
- * <p>Copyright: Copyright (c) 2017-2050</p>
- * <p>Company: Nepxion</p>
- * @author zifeihan
- * @version 1.0
- */
+import com.nepxion.discovery.agent.logger.AgentLogger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nepxion.discovery.agent.logger.AgentLogger;
+public final class ThreadLocalCopier {
 
-public class ThreadLocalCopier {
+    private ThreadLocalCopier() {
+
+    }
+
     private static final AgentLogger LOG = AgentLogger.getLogger(ThreadLocalCopier.class.getName());
     private static List<ThreadLocalHook> threadHooks = new ArrayList<>();
 
@@ -49,8 +45,7 @@ public class ThreadLocalCopier {
 
     public static void after() {
         try {
-            for (int i = 0; i < threadHooks.size(); i++) {
-                ThreadLocalHook threadHook = threadHooks.get(i);
+            for (ThreadLocalHook threadHook : threadHooks) {
                 threadHook.after();
             }
         } catch (Exception e) {
